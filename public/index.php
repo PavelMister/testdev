@@ -2,15 +2,25 @@
 
 require_once '../autoload.php';
 
+$requestUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$urlSegments = explode('/', trim($requestUrl));
 
-if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-    header('Content-Type: application: json');
+var_dump($urlSegments);
+// API Routes
+if (count($urlSegments) > 2 && $urlSegments[1] === 'api') {
+    $action = $urlSegments[2];
+    $apiResource = $urlSegments[1];
 
-    $action = $_GET['action'] ?? '';
+    return match ($action) {
+        'users' => new Controllers\UsersController($action),
+        empty($action) => throw new Exception('empty action'),
+        default => json_encode([
+            'success' => false,
+            'message' => 'Undefined api resource'
+        ]),
+    };
 
     exit;
 }
 
-
-
-echo "php " . var_dump($_ENV);
+// Default view for user table

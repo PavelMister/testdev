@@ -7,17 +7,24 @@ use Repositories\UserRepository;
 
 class UsersController
 {
-    public function __construct(
-        private UserRepository $userRepository = new UserRepository()
-    ) {
+    private UserRepository $userRepository;
+
+    public function __construct($action) {
         $db = Database::getInstance()->getConnection();
+        $this->userRepository = new UserRepository($db);
+
+        if (method_exists($this, $action)) {
+            header('Content-Type: application/json');
+            echo $this->$action;
+            exit;
+        }
     }
 
     /**
      * @return mixed
      */
-    public function actionUsersList()
+    private function actionUsersList(): array
     {
-        return (new UserRepository())->getAll();
+        return $this->userRepository->getAll();
     }
 }
