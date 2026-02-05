@@ -22,8 +22,13 @@ class UsersController
         return $this->userRepository->getAll();
     }
 
-    public function index(): string
+    /**
+     * @param string $query
+     * @param string $column
+     * @return array
+     */
+    public function search(string $query, string $column = 'first_name'): array
     {
-        return 'Html empty template';
+        return $this->userRepository->search($query, $column);
     }
 }

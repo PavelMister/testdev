@@ -2,9 +2,9 @@
 
 namespace Core;
 
-use Helpers\LoggingHelper;
 use PDO;
 use PDOException;
+use Helpers\LoggingHelper;
 
 class Database
 {
@@ -16,13 +16,13 @@ class Database
      * @throws \Exception
      */
     private function __construct() {
-        $host = $_ENV['DB_HOST'] ?? 'localhost';
-        $db   = $_ENV['DB_NAME'] ?? '';
-        $user = $_ENV['DB_USER'] ?? 'root';
-        $pass = $_ENV['DB_PASS'] ?? '';
+        $config = Config::get('db');
 
         try {
-            $this->connection = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
+            $this->connection = new PDO(
+                "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}",
+                $config['user'],
+                $config['pass'], [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]);

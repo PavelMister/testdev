@@ -3,10 +3,15 @@
 namespace Controllers;
 
 
-class MainController
+use Core\Config;
+use Core\View;
+
+class MainController extends View
 {
     public function index(): string
     {
-        return 'zalypa';
+        return $this->renderView('index_page.php', [
+            'title' => Config::get('app')['name']
+        ]);
     }
 }

@@ -10,6 +10,7 @@ $router = new Routes();
 
 // API routes
 $router->get('api/users/list', [UsersController::class, 'list']);
+$router->get('api/users/search', [UsersController::class, 'search']);
 
 // Index view
 $router->get('/', [MainController::class, 'index']);
