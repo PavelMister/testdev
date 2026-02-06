@@ -181,9 +181,9 @@ async function createUserRequest(firstName, lastName, roleId) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                first_name: firstName,
-                last_name: lastName,
-                role_id: roleId
+                firstName: firstName,
+                lastName: lastName,
+                roleId: roleId
             })
         });
 
@@ -230,22 +230,36 @@ function renderUsersTable(usersData) {
                             <td class="px-6 py-4">${escapeHtml(user.last_name)}</td>
                             <td class="px-6 py-4">${escapeHtml(user.role_name)}</td>
                             <td class="px-6 py-4">
-                                <button data-action="delete"
-                                        data-id="${user.id}"
-                                        command="show-modal"
-                                        commandfor="deleteDialog"
-                                        class="text-red-600 hover:underline"
-                                >Видалити</button>
-
-                                <button data-action="edit"
-                                      command="show-modal"
-                                      commandfor="editDialog"
-                                      data-id="${user.id}"
-                                      data-first-name="${user.first_name}"
-                                      data-last-name="${user.last_name}"
-                                      data-role-id="${user.role_id}"
-                                      class="text-blue-600 hover:underline"
-                                >Редагувати</button>
+                                <div class="flex items-center gap-4 whitespace-nowrap">
+                                    <button data-action="delete"
+                                            data-id="${user.id}"
+                                            command="show-modal"
+                                            commandfor="deleteDialog"
+                                            class="flex items-center justify-center"
+                                    >
+                                       <div 
+                                          class="w-5 h-5 bg-gray-500 hover:bg-red-500 transition-colors"
+                                          style="mask: url('/storage/images/icons/delete_action.svg') no-repeat center / contain; 
+                                                 -webkit-mask: url('/storage/images/icons/delete_action.svg') no-repeat center / contain;"
+                                        ></div>
+                                     </button>
+    
+                                    <button data-action="edit"
+                                            command="show-modal"
+                                            commandfor="editDialog"
+                                            data-id="${user.id}"
+                                            data-first-name="${user.first_name}"
+                                            data-last-name="${user.last_name}"
+                                            data-role-id="${user.role_id}"
+                                            class="flex items-center justify-center"
+                                    >
+                                       <div 
+                                          class="w-5 h-5 bg-gray-500 hover:bg-blue-500 transition-colors"
+                                          style="mask: url('/storage/images/icons/edit_action.svg') no-repeat center / contain; 
+                                                 -webkit-mask: url('/storage/images/icons/edit_action.svg') no-repeat center / contain;"
+                                        ></div>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     `;
