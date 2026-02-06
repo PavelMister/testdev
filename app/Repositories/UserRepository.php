@@ -2,8 +2,8 @@
 
 namespace Repositories;
 
-use Core\Config;
 use PDO;
+use Core\Config;
 
 class UserRepository
 {
@@ -64,7 +64,7 @@ class UserRepository
 
     /**
      * Create new user
-     * @param $data
+     * @param array $data
      * @return bool
      */
     public function create(array $data): bool

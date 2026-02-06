@@ -56,7 +56,7 @@ document.addEventListener('click', async (event) => {
         const edited = await editAction();
         if (edited) {
             const id = editBtn.dataset.id;
-            // Передаємо всі параметри!
+
             await updateUserRequest(id, fNameInput.value, lNameInput.value, rIdInput.value);
             renderUsersTable(await getAllUsers());
         }
@@ -139,9 +139,16 @@ async function updateUserRequest(userId, firstName, lastName, roleId) {
             })
         })
 
+        const result = await response.json();
+
         if (!response.ok) {
-            sendNotification('Server error', 'error');
-            return;
+
+            if (result.errors) {
+                const errors = Object.values(result.errors).join("\n");
+                sendNotification(errors, 'error');
+                return;
+            }
+            throw new Error('Помилка сервера');
         }
 
         sendNotification('Дані користувача успішно оновлено!');
@@ -180,9 +187,17 @@ async function createUserRequest(firstName, lastName, roleId) {
             })
         });
 
-        console.log(response.ok);
+        const result = await response.json();
 
-        if (!response.ok) throw new Error('Помилка сервера');
+        if (!response.ok) {
+
+            if (result.errors) {
+                const errors = Object.values(result.errors).join("\n");
+                sendNotification(errors, 'error');
+                return;
+            }
+            throw new Error('Помилка сервера');
+        }
 
         sendNotification('Користувача успішно створено!');
         document.getElementById('create_firstName').value = '';

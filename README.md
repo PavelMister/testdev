@@ -21,12 +21,12 @@ A simple project built using pure PHP and MySQL (PDO).
 # Project Overview
 This project is divided into two main parts:
 
-User Management: Accessible on the main page — https://test.dev/
+User Management: Accessible on the main page - https://test.dev/
 
 **Preview**:
 ![table.png](readme_data/table.png)
 
-Goods Management: Accessible at — https://test.dev/goods
+Goods Management: Accessible at - https://test.dev/goods
 
 **Preview**:
 ![goods.png](readme_data/goods_dump.png)

@@ -2,7 +2,9 @@
 
 namespace Controllers;
 
+use Core\ApiResponse;
 use Core\Database;
+use Helpers\ValidationHelper;
 use Repositories\UserRepository;
 
 class UsersController
@@ -14,6 +16,12 @@ class UsersController
         $db = Database::getInstance()->getConnection();
         $this->userRepository = new UserRepository($db);
     }
+
+    protected array $rules = [
+        'firstName' => ['required', 'type' => 'string', 'min' => 2, 'max' => 50],
+        'lastName'  => ['required', 'type' => 'string', 'min' => 2, 'max' => 50],
+        'roleId'    => ['required', 'type' => 'numeric', 'min' => 1, 'max' => 3],
+    ];
 
     /**
      * Return all records in bd
@@ -51,11 +59,23 @@ class UsersController
 
     public function update(array $data): bool
     {
-        return $this->userRepository->update($data);
+        $errors = ValidationHelper::validate($this->rules, $data);
+
+        if (count($errors) > 0) {
+            ApiResponse::error('Error', 400, $errors);
+        }
+
+        ApiResponse::success($this->userRepository->update($data));
     }
 
     public function create(array $data): bool
     {
-        return $this->userRepository->create($data);
+        $errors = ValidationHelper::validate($this->rules, $data);
+
+        if (count($errors) > 0) {
+            ApiResponse::error('Error', 400, $errors);
+        }
+
+        ApiResponse::success($this->userRepository->create($data));
     }
 }
