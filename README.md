@@ -21,9 +21,9 @@ A simple project built using pure PHP and MySQL (PDO).
 This project is divided into two main parts:
 User Management: Accessible on the main page — https://test.dev/
 Example:
-![img.png](img.png)
+![table.png](readme_data/table.png)
 
 Goods Management: Accessible at — https://test.dev/goods
-![img_1.png](img_1.png)
+![goods.png](readme_data/goods_dump.png)
 
 Note: Please replace test.dev with your actual local domain (e.g., localhost or testdev.local).
