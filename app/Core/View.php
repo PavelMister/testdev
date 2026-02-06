@@ -6,6 +6,7 @@ class View
 {
     /**
      * Render view page
+     *
      * @param $path
      * @param array $data
      * @return string
@@ -21,6 +22,19 @@ class View
         extract($data);
         ob_start();
         include $fullPath;
+        return ob_get_clean();
+    }
+
+    /**
+     * Render text
+     *
+     * @param string $text
+     * @return string
+     */
+    public function renderText(string $text): string
+    {
+        ob_start();
+        echo $text;
         return ob_get_clean();
     }
 }

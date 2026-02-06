@@ -17,13 +17,11 @@ class GoodsController
 
     /**
      * Return all records in bd
-     *
      */
-    public function index(): void
+    public function list(): string
     {
         $goods = $this->goodsRepository->getGoodsReport();
 
-        var_export($goods);
-//        ApiResponse::success();
+        ApiResponse::success($goods);
     }
 }

@@ -21,6 +21,11 @@ class GoodsRepository
         return $this->db->query("SELECT * FROM goods ORDER BY id ASC")->fetchAll() ?? [];
     }
 
+    /**
+     * Get goods with additional fields.
+     *
+     * @return array
+     */
     public function getGoodsReport(): array
     {
         $sql = "SELECT 
