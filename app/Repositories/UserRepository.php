@@ -2,6 +2,7 @@
 
 namespace Repositories;
 
+use Core\Config;
 use PDO;
 
 class UserRepository
@@ -18,9 +19,26 @@ class UserRepository
      */
     public function getAll(): array
     {
-        return $this->db->query("SELECT * FROM users ORDER BY id DESC")->fetchAll() ?? [];
+        $limit = Config::get('db')['limit'];
+
+        $sql = "SELECT 
+                    users.*,
+                    roles.name as role_name
+                FROM users
+                LEFT JOIN roles ON users.role_id = roles.id
+                ORDER BY id ASC
+                LIMIT {$limit}";
+
+        return $this->db->query($sql)->fetchAll() ?? [];
     }
 
+    /**
+     * Search user by column
+     *
+     * @param string $query
+     * @param string $column
+     * @return array
+     */
     public function search(string $query, string $column): array
     {
         $allowedColumns = ['first_name', 'last_name', 'role_id'];
@@ -48,11 +66,68 @@ class UserRepository
      * @param $data
      * @return bool
      */
-    public function create($data): bool
+    public function create(array $data): bool
     {
-        $stmt = $this->db->prepare("INSET INFO USERS (first_name, last_name, position) VALUES (?, ?, ?)");
+        $sql = "INSERT INTO users (first_name, last_name, role_id) 
+                VALUES (:first_name, :last_name, :role_id)";
 
-        return $stmt->execute([$data['first_name'], $data['last_name'], $data['position']]);
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            'first_name' => $data['firstName'] ?? $data['first_name'],
+            'last_name'  => $data['lastName'] ?? $data['last_name'],
+            'role_id'    => $data['roleId'] ?? 2,
+        ]);
     }
 
+    /**
+     * Delete query
+     *
+     * @param $id
+     * @return bool
+     */
+    public function delete($id): bool
+    {
+        $stmt = $this->db->prepare('DELETE FROM users WHERE id = :id');
+
+        return $stmt->execute(['id' => $id]);
+    }
+
+    /**
+     * Update query
+     *
+     * @param array $params
+     * @return bool
+     */
+    public function update(array $params): bool
+    {
+        if (empty($params['userId'])) {
+            return false;
+        }
+
+        $fields = [];
+        $bindings = ['id' => $params['userId']];
+
+        $allowedFields = [
+            'first_name' => 'firstName',
+            'last_name'  => 'lastName',
+            'role_id'    => 'roleId'
+        ];
+
+        foreach ($allowedFields as $dbColumn => $paramKey) {
+            if (isset($params[$paramKey]) && $params[$paramKey] !== '') {
+                $fields[] = "{$dbColumn} = :{$paramKey}";
+                $bindings[$paramKey] = $params[$paramKey];
+            }
+        }
+
+        if (empty($fields)) {
+            return false;
+        }
+
+        $sql = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($bindings);
+    }
 }

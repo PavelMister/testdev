@@ -14,4 +14,9 @@ class MainController extends View
             'title' => Config::get('app')['name']
         ]);
     }
+
+    public function goods()
+    {
+        return (new GoodsController())->index();
+    }
 }

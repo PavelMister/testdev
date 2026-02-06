@@ -6,7 +6,6 @@ class Routes
 {
     private array $routes = [];
 
-
     /**
      * Register GET requests
      * @param $uri
@@ -27,6 +26,17 @@ class Routes
     public function post($uri, $callback): void
     {
         $this->routes['POST'][$uri] = $callback;
+    }
+
+    /**
+     * Register delete requests
+     * @param $uri
+     * @param $callback
+     * @return void
+     */
+    public function delete($uri, $callback): void
+    {
+        $this->routes['DELETE'][$uri] = $callback;
     }
 
     /**
@@ -53,24 +63,26 @@ class Routes
             $methodName = $callback[1];
             $controller = new $controllerName();
 
-
-            $reflection = new \ReflectionMethod($controller, $methodName);
             $params = [];
+            $bodyData = [];
+            $rawInput = file_get_contents('php://input');
 
-            // Merge GET and POST data
-            $requestData = array_merge($_GET, $_POST);
+            if (!empty($rawInput)) {
+                $bodyData = json_decode($rawInput, true);
 
-            foreach ($reflection->getParameters() as $parameter) {
-                $name = $parameter->getName();
-
-                if (array_key_exists($name, $requestData)) {
-                    $params[] = $requestData[$name];
-                } elseif ($parameter->isDefaultValueAvailable()) {
-                    $params[] = $parameter->getDefaultValue();
-                } else {
-                    $params[] = null;
+                if (is_null($bodyData)) {
+                    parse_str($rawInput, $bodyData);
                 }
             }
+            $requestData = array_merge($_GET, $_POST, (array) $bodyData);
+
+            foreach ($requestData as $parameterName => $parameterValue) {
+                if (array_key_exists($parameterName, $requestData)) {
+                    $params[$parameterName] = $parameterValue;
+                }
+            }
+
+            $params = [$params];
 
             $result = call_user_func_array([$controller, $methodName], $params);
 

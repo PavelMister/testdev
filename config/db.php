@@ -6,6 +6,7 @@ return [
         'dbname'  => $_ENV['DB_NAME'] ?? 'empty_db_name',
         'user'    => $_ENV['DB_USER'] ?? 'empty_username',
         'pass'    => $_ENV['DB_PASS'] ?? 'empty_pass',
-        'charset' => $_ENV['DB_CHARSET'] ?? 'utf8mb4'
+        'charset' => $_ENV['DB_CHARSET'] ?? 'utf8mb4',
+        'limit'   => $_END['DB_LIMIT_RECORDS'] ?? 50
     ],
 ];

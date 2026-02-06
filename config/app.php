@@ -2,6 +2,6 @@
 
 return [
     'app' => [
-        'name'  => 'Test Project',
+        'name'  => $_ENV['APP_NAME'] ?? 'Default App Name',
     ]
 ];
