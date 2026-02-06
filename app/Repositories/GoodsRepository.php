@@ -8,7 +8,8 @@ class GoodsRepository
 {
     private PDO $db;
 
-    public function __construct(PDO $db) {
+    public function __construct(PDO $db)
+    {
         $this->db = $db;
     }
 
@@ -42,7 +43,7 @@ class GoodsRepository
 
         $items = $this->db->query($sql)->fetchAll();
 
-        return array_map(function($item) {
+        return array_map(function ($item) {
             return [
                 'name'   => $item['product_name'],
                 'field1' => ($item['f_name1'] ?? 'Field 1') . ': ' . ($item['f_val1'] ?? '-'),

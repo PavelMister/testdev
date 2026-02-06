@@ -10,7 +10,8 @@ class RolesController
 {
     private RolesRepository $rolesRepository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $db = Database::getInstance()->getConnection();
         $this->rolesRepository = new RolesRepository($db);
     }

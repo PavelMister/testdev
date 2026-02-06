@@ -48,7 +48,9 @@ class Routes
         $method = $_SERVER['REQUEST_METHOD'];
 
         $uri = trim($uri, '/');
-        if ($uri === '') $uri = '/';
+        if ($uri === '') {
+            $uri = '/';
+        }
 
         if (!isset($this->routes[$method][$uri])) {
             ApiResponse::error('Route not found');

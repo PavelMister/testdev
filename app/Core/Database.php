@@ -15,17 +15,20 @@ class Database
      * Constructor for database connection.
      * @throws \Exception
      */
-    private function __construct() {
+    private function __construct()
+    {
         $config = Config::get('db');
 
         try {
             $this->connection = new PDO(
                 "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}",
                 $config['user'],
-                $config['pass'], [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            ]);
+                $config['pass'],
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                ]
+            );
         } catch (PDOException $e) {
             LoggingHelper::saveError($e->getMessage());
             throw new \Exception('Database not connected');

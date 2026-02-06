@@ -1,6 +1,7 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <style type="text/css" src="/storage/"/>
+    <title>404 Error</title>
 </head>
 </html>
 

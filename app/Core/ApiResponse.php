@@ -30,7 +30,9 @@ class ApiResponse
      */
     private static function send(int $statusCode, array $payload): void
     {
-        if (ob_get_length()) ob_clean();
+        if (ob_get_length()) {
+            ob_clean();
+        }
 
         header('Content-Type: application/json; charset=utf-8');
         http_response_code($statusCode);

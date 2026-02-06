@@ -10,7 +10,8 @@ class GoodsController
 {
     private GoodsRepository $goodsRepository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $db = Database::getInstance()->getConnection();
         $this->goodsRepository = new GoodsRepository($db);
     }

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @var $title string Page Title
  * @var $users array Users
  */
+
 ?>
 <!doctype html>
 <html lang="en">

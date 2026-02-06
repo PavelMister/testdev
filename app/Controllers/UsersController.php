@@ -9,7 +9,8 @@ class UsersController
 {
     private UserRepository $userRepository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $db = Database::getInstance()->getConnection();
         $this->userRepository = new UserRepository($db);
     }
