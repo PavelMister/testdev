@@ -16,3 +16,14 @@ A simple project built using pure PHP and MySQL (PDO).
 4. Web Server Configuration: Configure your web server (Apache/Nginx) to point to the /public directory as the 
    document root.
    - Note: An .htaccess file is already provided in the public/ directory for Apache routing.
+
+# Project Overview
+This project is divided into two main parts:
+User Management: Accessible on the main page — https://test.dev/
+Example:
+![img.png](img.png)
+
+Goods Management: Accessible at — https://test.dev/goods
+![img_1.png](img_1.png)
+
+Note: Please replace test.dev with your actual local domain (e.g., localhost or testdev.local).
