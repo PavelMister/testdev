@@ -8,7 +8,8 @@ A simple project built using pure PHP and MySQL (PDO).
 
 
 # Installation 
-1. Clone repository. `git clone https://github.com/PavelMister/testdev.git`
+1. Clone repository.
+`git clone https://github.com/PavelMister/testdev.git`
 2. Configure database using .env.example (copy example file to .env and make you're changes).
 `cp .env.example .env`
 3. Import db (using dump.sql).
@@ -19,11 +20,15 @@ A simple project built using pure PHP and MySQL (PDO).
 
 # Project Overview
 This project is divided into two main parts:
+
 User Management: Accessible on the main page — https://test.dev/
-Example:
+
+**Preview**:
 ![table.png](readme_data/table.png)
 
 Goods Management: Accessible at — https://test.dev/goods
+
+**Preview**:
 ![goods.png](readme_data/goods_dump.png)
 
 Note: Please replace test.dev with your actual local domain (e.g., localhost or testdev.local).
