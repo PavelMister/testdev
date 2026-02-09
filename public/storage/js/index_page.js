@@ -2,6 +2,7 @@ let usersBody;
 let rolesBody;
 let rolesCreateUserBody;
 
+
 document.addEventListener('DOMContentLoaded', async function() {
     usersBody = document.getElementById("usersBody");
     rolesBody = document.getElementById("roleId");
