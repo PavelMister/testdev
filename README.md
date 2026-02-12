@@ -1,4 +1,4 @@
-# Test Task - Pavel Mister
+# Pure PHP example - by Pavel Mister
 A simple project built using pure PHP and MySQL (PDO).
 
 # Requirements
@@ -25,10 +25,5 @@ User Management: Accessible on the main page - https://test.dev/
 
 **Preview**:
 ![table.png](readme_data/table.png)
-
-Goods Management: Accessible at - https://test.dev/goods
-
-**Preview**:
-![goods.png](readme_data/goods_dump.png)
 
 Note: Please replace test.dev with your actual local domain (e.g., localhost or testdev.local).
