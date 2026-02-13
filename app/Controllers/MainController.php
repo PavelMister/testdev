@@ -2,15 +2,15 @@
 
 namespace Controllers;
 
-use Core\Config;
 use Core\View;
+use Core\Config;
 
 class MainController extends View
 {
-    private GoodsController $goods;
+    private ProductsController $products;
     public function __construct()
     {
-        $this->goods = new GoodsController();
+        $this->products = new ProductsController();
     }
 
     public function index(): string
@@ -20,8 +20,10 @@ class MainController extends View
         ]);
     }
 
-    public function goods(): string
+    public function test(): string
     {
-        return $this->renderText($this->goods->list());
+        var_dump($this->products->list());
+        return '';
+//        return $this->renderText();
     }
 }

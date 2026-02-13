@@ -2,17 +2,10 @@
 
 namespace Repositories;
 
-use Core\Config;
-use PDO;
+use Core\DefaultRepository;
 
-class RolesRepository
+class RolesRepository extends DefaultRepository
 {
-    private PDO $db;
-
-    public function __construct(PDO $db)
-    {
-        $this->db = $db;
-    }
 
     /**
      * Get all roles

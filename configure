@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'autoload.php';
+
+$commands = [
+        'generate:app_key',
+        'get:commands'
+];
+
+if ($argc == 1 ) {
+    echo 'Required command, please use "php configure get:commands" for get all allowed commands';
+    return;
+}
+
+$command = strtolower(trim($argv[1]));
+
+if (!in_array($command, $commands)) {
+    echo 'Undefined command, please use "php configure get:commands" for get all allowed commands';
+    return;
+}
+
+if ($command === 'get:commands') {
+    $response = 'Allowed commands: ' . PHP_EOL;
+
+    foreach ($commands as $command) {
+        $response.= "\033[33m" . $command . "\033[0m" . PHP_EOL;
+    }
+
+    echo $response;
+    return;
+}
+
+if ($command === 'generate:app_key') {
+    $hash = password_hash(microtime(), PASSWORD_BCRYPT);
+
+    echo "\033[33m" . $hash . "\033[0m" . PHP_EOL;
+    return;
+}
+
+exit();
