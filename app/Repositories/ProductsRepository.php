@@ -6,22 +6,33 @@ use Core\DefaultRepository;
 
 class ProductsRepository extends DefaultRepository
 {
-    private array $modelColumns = [
+    public string $modelTable = 'products';
+    public array $modelColumns = [
         'id', 'slug', 'name', 'price'
     ];
 
-    public function getAll($orderBy = 'id'): array
+    protected array $relations = [
+        'category' => [
+            'table' => 'product_categories',
+            'foreign_key' => 'category_id',
+            'local_key' => 'id',
+            'columns' => ['id', 'name', 'slug']
+        ]
+    ];
+
+    public function getAll($orderBy, $orderType, $startRow = 1, $endRow = 50): array
     {
-        $allowedColumns = $this->modelColumns;
+        return $this->getAllWith(
+            with: ['category'],
+            orderBy: $orderBy,
+            orderType: $orderType,
+            startRow: $startRow,
+            endRow: $endRow,
+        );
+    }
 
-        if (!in_array($orderBy, $allowedColumns)) {
-            return [];
-        }
-
-        $query = $this->db->prepare('SELECT * FROM products ORDER BY :orderBy ASC');
-
-        var_dump($query->execute(['orderBy' => $orderBy]));
-
-        return $query->fetchAll() ?? [];
+    public function search($orderBy = 'id'): array
+    {
+        return $this->getAllWith(['category'], $orderBy);
     }
 }

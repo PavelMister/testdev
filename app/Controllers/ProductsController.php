@@ -28,9 +28,27 @@ class ProductsController
      *
      * @return mixed
      */
-    public function list(): array
+    public function list($orderBy, $orderType, $startRow = 1, $endRow = 50): array
     {
-        return $this->productsRepository->getAll();
+        var_dump($orderBy);
+        return $this->productsRepository->getAll(
+            orderBy: $orderBy,
+            orderType: $orderType,
+            startRow: $startRow,
+            endRow: $endRow
+        );
+    }
+
+    /**
+     * Search user like by query and column
+     *
+     * @param string $query
+     * @param string $column
+     * @return array
+     */
+    public function search(string $query, string $column = 'id'): array
+    {
+        return $this->productsRepository->search($query, $column);
     }
 //
 //    /**

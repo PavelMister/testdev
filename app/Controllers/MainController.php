@@ -20,10 +20,9 @@ class MainController extends View
         ]);
     }
 
-    public function test(): string
+    public function test($parameters): string
     {
-        var_dump($this->products->list());
+        var_dump($this->products->list(...$parameters));
         return '';
-//        return $this->renderText();
     }
 }
