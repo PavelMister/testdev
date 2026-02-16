@@ -21,6 +21,6 @@ $router->get('api/users/search', [UsersController::class, 'search']);
 
 // Index view
 $router->get('/', [MainController::class, 'index']);
-$router->get('goods', [MainController::class, 'goods']);
+$router->get('test', [MainController::class, 'test']);
 
 $router->resolve();

@@ -2,18 +2,11 @@
 
 namespace Repositories;
 
-use PDO;
 use Core\Config;
+use Core\DefaultRepository;
 
-class UserRepository
+class UserRepository extends DefaultRepository
 {
-    private PDO $db;
-
-    public function __construct(PDO $db)
-    {
-        $this->db = $db;
-    }
-
     /**
      * Get all users
      * @return array
