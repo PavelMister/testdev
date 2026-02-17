@@ -14,7 +14,11 @@ class ProductItem extends Model
     public ?string $description;
     public ?array $category;
 
+    public int $user_id;
+    public string $updated_at;
+    public string $created_at;
+
     public array $modelColumns = [
-        'id', 'name', 'slug', 'price', 'deleted', 'category_id', 'description'
+        'id', 'name', 'slug', 'price', 'deleted', 'category_id', 'description', 'user_id'
     ];
 }
