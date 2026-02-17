@@ -3,13 +3,17 @@
 namespace Repositories;
 
 use Core\DefaultRepository;
+use Models\ProductItem;
 
 class ProductsRepository extends DefaultRepository
 {
     public string $modelTable = 'products';
+
     public array $modelColumns = [
         'id', 'slug', 'name', 'price'
     ];
+
+    protected string $modelClass = ProductItem::class;
 
     protected array $relations = [
         'category' => [
