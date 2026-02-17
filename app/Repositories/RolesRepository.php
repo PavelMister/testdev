@@ -6,7 +6,6 @@ use Core\DefaultRepository;
 
 class RolesRepository extends DefaultRepository
 {
-
     /**
      * Get all roles
      * @return array

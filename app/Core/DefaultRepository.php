@@ -3,6 +3,7 @@
 namespace Core;
 
 use PDO;
+use const Dom\VALIDATION_ERR;
 
 abstract class DefaultRepository
 {
@@ -10,7 +11,9 @@ abstract class DefaultRepository
 
     protected string $modelTable = '';
 
-    protected const DEFAULT_ORDER_TYPE = 'ASC';
+    protected const string DEFAULT_ORDER_TYPE = 'ASC';
+
+    protected string $modelClass = '';
 
     protected array $relations = [];
     protected array $modelColumns = [];
@@ -18,6 +21,17 @@ abstract class DefaultRepository
     public function __construct(PDO $db)
     {
         $this->db = $db;
+    }
+
+    private function hydrate(array $data): object
+    {
+        $model = new $this->modelClass;
+
+        foreach ($data as $key => $value) {
+            $model->{$key} = $value;
+        }
+
+        return $model;
     }
 
     public function getAllWith(
@@ -28,8 +42,6 @@ abstract class DefaultRepository
         int $endRow    = 50)
     : array
     {
-
-        var_dump($orderType);
         if (empty($this->modelTable)) {
             throw new \Exception('is empty $modelTable in repository');
         }
@@ -68,14 +80,14 @@ abstract class DefaultRepository
 
         $query = $this->db->prepare($sql);
 
-
         $query->bindValue(':startRow', (int)$startRow, PDO::PARAM_INT);
         $query->bindValue(':endRow', (int)$endRow, PDO::PARAM_INT);
 
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC) ?? [];
+        $mapped = $this->mapRelations($results, $with); //
 
-        return $this->mapRelations($results, $with);
+        return array_map([$this, 'hydrate'], $mapped);
     }
 
     private function mapRelations(array $results, array $with): array
